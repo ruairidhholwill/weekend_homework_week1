@@ -23,5 +23,49 @@ def stock_count(pet_shop)
 end
 
 def pets_by_breed(pet_shop, breed_name)
-  pet_shop[:pets].count { |h| h[:breed] == breed_name }
+  array_pets = []
+  for pet in pet_shop[:pets]
+    if pet[:breed] == breed_name
+      array_pets.push(pet)
+    end
+  end
+  return array_pets
+end
+
+def find_pet_by_name(pet_shop, pet_name)
+  for pet in pet_shop[:pets]
+    if pet[:name] == pet_name
+      return pet
+    end
+  end
+  return nil
+end
+
+def remove_pet_by_name(pet_shop, pet_name)
+  for pet in pet_shop[:pets]
+    if pet[:name] == pet_name
+      return pet_shop[:pets].delete(pet)
+    end
+  end
+end
+
+def add_pet_to_stock(pet_shop, new_pet)
+  count_array = pet_shop[:pets]
+  return count_array.push(new_pet)
+end
+
+def customer_cash(customers)
+  return customers[:cash]
+end
+
+def remove_customer_cash(customer, cash_amount_to_remove)
+  customer[:cash] -= cash_amount_to_remove
+end
+
+def customer_pet_count(customer)
+  return customer[:pets].count
+end
+
+def add_pet_to_customer(customer, new_pet)
+  return customer[:pets].push(new_pet)
 end
