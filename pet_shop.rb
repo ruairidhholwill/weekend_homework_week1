@@ -42,11 +42,8 @@ def find_pet_by_name(pet_shop, pet_name)
 end
 
 def remove_pet_by_name(pet_shop, pet_name)
-  for pet in pet_shop[:pets]
-    if pet[:name] == pet_name
-      return pet_shop[:pets].delete(pet)
-    end
-  end
+  pet = find_pet_by_name(pet_shop, pet_name)
+  pet_shop[:pets].delete(pet)
 end
 
 def add_pet_to_stock(pet_shop, new_pet)
@@ -54,8 +51,8 @@ def add_pet_to_stock(pet_shop, new_pet)
   return count_array.push(new_pet)
 end
 
-def customer_cash(customers)
-  return customers[:cash]
+def customer_cash(customer)
+  return customer[:cash]
 end
 
 def remove_customer_cash(customer, cash_amount_to_remove)
@@ -79,5 +76,23 @@ def customer_can_afford_pet(customer, new_pet)
 end
 
 def sell_pet_to_customer(pet_shop, pet, customer)
-  
+  if pet && customer_can_afford_pet(customer, pet)
+    # increase customer pet count
+    customer[:pets].push(pet)
+    # pets sold
+    pet_shop[:admin][:pets_sold] += 1
+    #customer cash after purchase
+    customer[:cash] -= pet[:price]
+    #pet shop cash
+    pet_shop[:admin][:total_cash] += pet[:price]
+  else
+    # customer pet count no change
+    customer_pet_count(customer)
+    # pets sold no change
+    pets_sold(pet_shop)
+    # customer cash unchanged
+    customer_cash(customer)
+    # pet shop cash uchanged
+    total_cash(pet_shop)
+  end
 end
