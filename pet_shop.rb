@@ -6,6 +6,7 @@ def total_cash(pet_shop)
   return pet_shop[:admin][:total_cash]
 end
 
+#NOTES: you cant use total_cash here as total cash is only returning the value, it is not used to CHANGE the value. For example though, you could use add_or_remove_cash elsewhere as it is changing the value. 
 def add_or_remove_cash(pet_shop, money_to_be_added_or_removed)
   pet_shop[:admin][:total_cash] += money_to_be_added_or_removed
 end
@@ -19,7 +20,7 @@ def increase_pets_sold(pet_shop, number_of_pets_sold)
 end
 
 def stock_count(pet_shop)
-  pet_shop[:pets].length
+  return pet_shop[:pets].length()
 end
 
 def pets_by_breed(pet_shop, breed_name)
@@ -46,6 +47,7 @@ def remove_pet_by_name(pet_shop, pet_name)
   pet_shop[:pets].delete(pet)
 end
 
+# NOTES: could just push to the pet_shop[:pets]
 def add_pet_to_stock(pet_shop, new_pet)
   count_array = pet_shop[:pets]
   return count_array.push(new_pet)
@@ -68,6 +70,9 @@ def add_pet_to_customer(customer, new_pet)
 end
 
 def customer_can_afford_pet(customer, new_pet)
+
+# NOTES: Could just be: return customer[:cash] >= new_pet[:price]
+
   if customer[:cash] >= new_pet[:price]
     return true
   else
@@ -75,6 +80,7 @@ def customer_can_afford_pet(customer, new_pet)
   end
 end
 
+# NOTES: could use the functions above!
 def sell_pet_to_customer(pet_shop, pet, customer)
   if pet && customer_can_afford_pet(customer, pet)
     customer[:pets].push(pet)
